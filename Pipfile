@@ -11,6 +11,7 @@ pandas = "*"
 matplotlib = "*"
 jupyter = "*"
 click = "*"
+"autopep8" = "*"
 
 
 [dev-packages]
