@@ -13,7 +13,7 @@ class SpreadSheet():
 class MotorAccidentData(SpreadSheet):
 
     def __init__(self):
-        self.data = pd.read_csv('hki_liikenneonnettomuudet.csv',
+        self.data = pd.read_csv('CSVs/hki_liikenneonnettomuudet.csv',
                                 ';',
                                 # removed location data as it overcomplicates
                                 # everything)
@@ -37,14 +37,14 @@ class MotorAccidentData(SpreadSheet):
 
 class SwimmingPoolData(SpreadSheet):
     def __init__(self):
-        self.data = pd.read_csv('Uimahallien kÑyntitapahtumatv2.csv',
+        self.data = pd.read_csv('CSVs/Uimahallien kÑyntitapahtumatv2.csv',
                                 ';', encoding='ISO-8859-1')
 
 
 class BirdData(SpreadSheet):
 
     def __init__(self):
-        self.data = pd.read_csv('lintuatlas12.zip Folder/havainnot.csv',
+        self.data = pd.read_csv('CSVs/lintuatlas12.zip Folder/havainnot.csv',
                                      header=None,
                                      usecols=[
                                          0, 3, 4, 5, ],  # removed location data as it overcomplicates everything
