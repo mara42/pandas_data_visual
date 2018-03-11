@@ -10,6 +10,7 @@ name = "pypi"
 pandas = "*"
 matplotlib = "*"
 jupyter = "*"
+click = "*"
 
 
 [dev-packages]
