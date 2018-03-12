@@ -12,6 +12,7 @@ matplotlib = "*"
 jupyter = "*"
 click = "*"
 "autopep8" = "*"
+pandas-datareader = "*"
 
 
 [dev-packages]

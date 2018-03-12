@@ -47,13 +47,13 @@ class BirdData(SpreadSheet):
         self.data = pd.read_csv('CSVs/lintuatlas12.zip Folder/havainnot.csv',
                                      header=None,
                                      usecols=[
-                                         0, 3, 4, 5, ],  # removed location data as it overcomplicates everything
+                                         0, 3, 4, 5],  # removed location data as it overcomplicates everything
                                      names=['Species',
                                             'Nesting category 1974-79',
                                             'Nesting category 1986-89',
                                             'Nesting categories combined'])
         self.species = pd.read_csv(
-            'lintuatlas12.zip Folder/lajit.csv',
+            'CSVs/lintuatlas12.zip Folder/lajit.csv',
             encoding='ISO-8859-1',
             usecols=[
                 0,
@@ -80,17 +80,16 @@ class BirdData(SpreadSheet):
             nesting_categories)
 
 
-# stats = BirdData()
-# stats.rename_bird_sighting()
-
-# print(stats.data)
+# bird_stats = BirdData()
+# bird_stats.format_data()
+# print(bird_stats.data)
 
 
 # acc_stats = MotorAccidentData()
 # acc_stats.format_data()
 # print(acc_stats.data)
 
-if __name__ == '__main__':
-    pool_stats = SwimmingPoolData()
-    print(pool_stats.get_description())
+# if __name__ == '__main__':
+pool_stats = SwimmingPoolData()
+print(pool_stats.data)
 
