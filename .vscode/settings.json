@@ -4,5 +4,6 @@
     "python.unitTest.unittestEnabled": false,
     "python.unitTest.nosetestsEnabled": false,
     "python.pythonPath": "/Users/matt/.local/share/virtualenvs/mini-assessment-13dtSyk6/bin/python",
-    "python.linting.pylintEnabled": false
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true
 }

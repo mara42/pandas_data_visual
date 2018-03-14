@@ -13,6 +13,7 @@ jupyter = "*"
 click = "*"
 "autopep8" = "*"
 pandas-datareader = "*"
+"flake8" = "*"
 
 
 [dev-packages]
