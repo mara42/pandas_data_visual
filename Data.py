@@ -47,11 +47,7 @@ class BirdData(SpreadSheet):
         self.data = pd.read_csv('CSVs/lintuatlas12.zip Folder/havainnot.csv',
                                      header=None,
                                      usecols=[
-                                         0, 3, 4, 5],  # removed location data as it overcomplicates everything
-                                     names=['Species',
-                                            'Nesting category 1974-79',
-                                            'Nesting category 1986-89',
-                                            'Nesting categories combined'])
+                                         0, 3, 4, 5])  # removed location data as it overcomplicates everything]
         self.species = pd.read_csv(
             'CSVs/lintuatlas12.zip Folder/lajit.csv',
             encoding='ISO-8859-1',
@@ -61,23 +57,28 @@ class BirdData(SpreadSheet):
             squeeze=True,
             index_col=0,
             header=None)
+        self.nesting_categories = {0: 'No sighting',
+                                   1: 'Unlikely nesting',
+                                   2: 'Possible nesting',
+                                   3: 'Likely nesting',
+                                   4: 'Certain Nesting'}
+        self.column_names = ['Species',
+                             'Nesting category 1974-79',
+                             'Nesting category 1986-89',
+                             'Nesting categories combined']
 
     def format_data(self):
         """Information on how to map the data was taken from
         the accompanying file 'ohje.txt'"""
-        nesting_categories = {0: 'No sighting',
-                              1: 'Unlikely nesting',
-                              2: 'Possible nesting',
-                              3: 'Likely nesting',
-                              4: 'Certain Nesting'}
-
+        
+        self.data.columns = self.column_names
         self.data['Species'] = self.data['Species'].map(self.species)
         self.data['Nesting category 1974-79'] = self.data['Nesting category 1974-79'].map(
-            nesting_categories)
+            self.nesting_categories)
         self.data['Nesting category 1986-89'] = self.data['Nesting category 1986-89'].map(
-            nesting_categories)
+            self.nesting_categories)
         self.data['Nesting categories combined'] = self.data['Nesting categories combined'].map(
-            nesting_categories)
+            self.nesting_categories)
 
 
 # bird_stats = BirdData()
@@ -98,6 +99,6 @@ if __name__ == '__main__':
     with open('test_output/pool_stats.txt', 'w') as p:
         p.write(pool_stats.data)
     with open('test_output/bird_stats.txt', 'w') as b:
-        b.write('bird_stats.txt) 
+        b.write(bird_stats.data) 
     with open('tets_output/acc_stats.data', 'w') as a:
-        a.write('acc_stats.data')
+        a.write(acc_stats.data)
