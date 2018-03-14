@@ -89,7 +89,15 @@ class BirdData(SpreadSheet):
 # acc_stats.format_data()
 # print(acc_stats.data)
 
-# if __name__ == '__main__':
-pool_stats = SwimmingPoolData()
-print(pool_stats.data)
-
+if __name__ == '__main__':
+    pool_stats = SwimmingPoolData()
+    bird_stats = BirdData()
+    bird_stats.format_data()
+    acc_stats = MotorAccidentData()
+    acc_stats.format_data()
+    with open('test_output/pool_stats.txt', 'w') as p:
+        p.write(pool_stats.data)
+    with open('test_output/bird_stats.txt', 'w') as b:
+        b.write('bird_stats.txt) 
+    with open('tets_output/acc_stats.data', 'w') as a:
+        a.write('acc_stats.data')
