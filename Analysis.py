@@ -1,5 +1,4 @@
 from Data import MotorAccidentData, SwimmingPoolData, BirdData
-import matplotlib.pyplot as plt
 import pandas as pd
 
 
@@ -73,6 +72,7 @@ class BirdAnalysis(BirdData):
 
 
 if __name__ == '__main__':
+    import matplotlib.pyplot as plt
     # test_bird = BirdAnalysis()
     # test_bird.least_certainly_sighted()
 
