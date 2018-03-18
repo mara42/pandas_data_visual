@@ -21,7 +21,7 @@ class MotorAccidentData(SpreadSheet):
                                 names=['Category', 'Severity', 'Year'],
                                 skiprows=[0])
 
-    def format_data(self):
+    def _format_data(self):
         severity = {1: 'property damage',
                     2: "injury",
                     3: "fatality"}
@@ -67,7 +67,7 @@ class BirdData(SpreadSheet):
                              'Nesting category 1986-89',
                              'Nesting categories combined']
 
-    def format_data(self):
+    def _format_data(self):
         """Information on how to map the data was taken from
         the accompanying file 'ohje.txt'"""
         

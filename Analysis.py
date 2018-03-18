@@ -7,11 +7,15 @@ class PoolAnalysis(SwimmingPoolData):
     def __init__(self):
         SwimmingPoolData.__init__(self)
 
-    def ten_most_popular_products(self):
+    def ten_most_popular_products(self, plot=False):
         products = self.data['Product']
-        return products.value_counts().head(10)
+        popular_products = products.value_counts().head(10)
+        if plot:
+            return popular_products.plot(kind='barh')
+        else:
+            return popular_products
 
-    def sales_over_time(self):
+    def sales_over_time(self, plot=False):
         def get_months(date):
             _, month, _ = date.split('.', 2)
             if len(month) == 1:
@@ -21,21 +25,29 @@ class PoolAnalysis(SwimmingPoolData):
         # dates = self.data['Date']
         df['Date'] = df['Date'].apply(get_months)  # .value_counts().sort_index()
         sales_by_month = df['Date'].value_counts()
-        return pd.DataFrame(
+        sales_over_t = pd.DataFrame(
             {'Month': sales_by_month.index.values,
              "Sales": sales_by_month
              }).sort_index()
+        if plot:
+            sales_over_t.plot(kind='bar')
+        else:
+            return sales_over_t
 
 
 class AccidentAnalysis(MotorAccidentData):
 
     def __init__(self):
         MotorAccidentData.__init__(self)
-        self.format_data()
+        self._format_data()
 
-    def fatality_by_category(self):
-        return self.data.loc[self.data['Severity'] ==
-                            'fatality']['Category'].value_counts()  # .plot(kind='pie')
+    def fatality_by_category(self, plot=False):
+        fatalities = self.data.loc[self.data['Severity'] ==
+                                   'fatality']['Category'].value_counts()
+        if plot:
+            return fatalities.plot(kind='pie')
+        else:
+            return fatalities
 
     def _accidents_over_time_by_category(self):
         category_by_year = self.data[['Category', 'Year']]
@@ -49,25 +61,28 @@ class AccidentAnalysis(MotorAccidentData):
             self.data[['Severity', 'Year']].columns.tolist(), as_index=False).size()
         return multi_index_data.unstack(level=0)  # .plot(subplots=True)
 
-    def accidents_over_time_by_severity_and_category(self):
+    def accidents_over_time_by_severity_and_category(self, plot=False):
         severity = self._accidents_over_time_by_severity()
         category = self._accidents_over_time_by_category()
-        return severity.merge(category, left_index=True,
-                              right_index=True)  # .plot(kind='line')
+        severity_and_category = severity.merge(category, left_index=True,
+                                              right_index=True)
+        if plot:
+            severity_and_category.plot(kind='line')
+        return severity_and_category
 
 
 class BirdAnalysis(BirdData):
 
     def __init__(self):
         BirdData.__init__(self)
-        self.format_data()
+        self._format_data()
 
     # def sighting_counts(self):
     #     sighting_series = self.data.loc[self.data['Nesting categories combined'] ==
     #                                     'Certain Nesting']['Species'].value_counts()
     #     return sighting_series  # .loc[sighting_series < 100] # .plot('barh')
 
-    def sighting_counts(self, atlas, certainty):
+    def sighting_counts(self, atlas, certainty, plot=False):
         sightings = self.data.loc[self.data[atlas] == certainty]  # ['Species']
 
 
