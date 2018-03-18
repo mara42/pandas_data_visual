@@ -22,8 +22,7 @@ class PoolAnalysis(SwimmingPoolData):
                 month = '0'+month
             return month
         df = self.data.copy()
-        # dates = self.data['Date']
-        df['Date'] = df['Date'].apply(get_months)  # .value_counts().sort_index()
+        df['Date'] = df['Date'].apply(get_months)
         sales_by_month = df['Date'].value_counts()
         sales_over_t = pd.DataFrame(
             {'Month': sales_by_month.index.values,
@@ -53,13 +52,13 @@ class AccidentAnalysis(MotorAccidentData):
         category_by_year = self.data[['Category', 'Year']]
         multi_index_data = category_by_year.groupby(
             self.data[['Category', 'Year']].columns.tolist(), as_index=False)
-        return multi_index_data.size().unstack(level=0)  # .plot(subplots=True)
+        return multi_index_data.size().unstack(level=0)
 
     def _accidents_over_time_by_severity(self):
         severity_by_year = self.data[['Severity', 'Year']]
         multi_index_data = severity_by_year.groupby(
             self.data[['Severity', 'Year']].columns.tolist(), as_index=False).size()
-        return multi_index_data.unstack(level=0)  # .plot(subplots=True)
+        return multi_index_data.unstack(level=0)
 
     def accidents_over_time_by_severity_and_category(self, plot=False):
         severity = self._accidents_over_time_by_severity()

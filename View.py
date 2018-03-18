@@ -8,7 +8,7 @@ class UI:
 
     def __init__(self):
         self._pool = PoolAnalysis()
-        self._accidents = AccidentAnalysis() # bugged showing inherited methods
+        self._accidents = AccidentAnalysis()
         self._birds = BirdAnalysis()
         self.select_data_UI = (f"{UI.divider}\nMAIN MENU:\n\nSelect the dataset to present "
                                f"by typing a letter from the list below.\n\nVisits at the City of Vantaa "
@@ -43,61 +43,6 @@ class UI:
         """This cool function was taken from:
         https://stackoverflow.com/questions/3061/calling-a-function-of-a-module-by-using-its-name-a-string"""
         return getattr(dataset, plots[pick])(plot=True)
-
-    
-# def cli_testing():
-    
-#     @cli.command()
-#     def menu():
-#     """Shows a simple menu."""
-#     menu = 'main'
-#     while 1:
-#         if menu == 'main':
-#             click.echo('Main menu:')
-#             click.echo(select_data_UI)
-#             click.echo('  q: quit')
-#             char = click.getchar()
-#             if char == 'a':
-#                 menu = 'pool'
-#             elif char == 'b'
-#                 menu = 'acc'
-#             elif char == 'c':
-#                 menu = 'bird'
-#             elif char == 'q':
-#                 menu = 'quit'
-#             else:
-#                 click.echo('Invalid input')
-
-#         elif menu == 'pool':
-#             click.echo(choose_pool_plot)
-#             click.echo('  b: back')
-#             char = click.getchar()
-#             if char == 'b':
-#                 menu = 'main'
-#             else:
-#                 click.echo('Invalid input')
-
-#         elif menu == 'acc':
-#             click.echo(choose_accident_plot)
-#             click.echo('  b: back')
-#             char = click.getchar()
-#             if char == 'b':
-#                 menu = 'main'
-#             else:
-#                 click.echo('Invalid input')
-
-#         elif menu == 'bird':
-#             click.echo(choose_bird_plot)
-#             click.echo('  b: back')
-#             char = click.getchar()
-#             if char == 'b':
-#                 menu = 'main'
-#             else:
-#                 click.echo('Invalid input')
-#         elif menu == 'quit':
-#             return
-
-
 
 
 if __name__ == '__main__':
