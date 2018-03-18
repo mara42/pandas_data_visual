@@ -66,8 +66,9 @@ class AccidentAnalysis(MotorAccidentData):
         severity_and_category = severity.merge(category, left_index=True,
                                               right_index=True)
         if plot:
-            severity_and_category.plot(kind='line')
-        return severity_and_category
+            return severity_and_category.plot(kind='line')
+        else:
+            return severity_and_category
 
 
 class BirdAnalysis(BirdData):
@@ -75,14 +76,15 @@ class BirdAnalysis(BirdData):
     def __init__(self):
         BirdData.__init__(self)
         self._format_data()
-
-    # def sighting_counts(self):
-    #     sighting_series = self.data.loc[self.data['Nesting categories combined'] ==
-    #                                     'Certain Nesting']['Species'].value_counts()
-    #     return sighting_series  # .loc[sighting_series < 100] # .plot('barh')
-
-    def sighting_counts(self, atlas, certainty, plot=False):
-        sightings = self.data.loc[self.data[atlas] == certainty]  # ['Species']
+    
+    def birds_with_less_than_10_certain_sightings(self, plot=False):
+        series = self.data.loc[self.data['Nesting categories combined']
+                        == 'Certain Nesting']['Species'].value_counts()
+        less_than_10 = series.loc[series < 10]
+        if plot:
+            return less_than_10.plot('barh')
+        else:
+            return less_than_10
 
 
 if __name__ == '__main__':
@@ -94,11 +96,11 @@ if __name__ == '__main__':
     # test_pool.ten_most_popular_products()
     # test_pool.sales_over_time().plot(kind='bar')
 
-    test_accident = AccidentAnalysis()
+    # test_accident = AccidentAnalysis()
     # test_accident.fatality_by_category()
     # test_accident.accidents_over_time_by_category()
     # test_accident.accidents_over_time_by_severity().plot()
-    test_accident.accidents_over_time_by_severity_and_category().plot()
+    # test_accident.accidents_over_time_by_severity_and_category().plot()
     
     plt.show()
 
