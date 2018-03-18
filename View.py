@@ -10,9 +10,15 @@ class UI:
         self._pool = PoolAnalysis()
         self._accidents = AccidentAnalysis() # bugged showing inherited methods
         self._birds = BirdAnalysis()
-        self.select_data_UI = "MAIN MENU:\n\nSelect the dataset to present by typing a letter from the list below.\n\nVisits at the City of Vantaa swimming pools [a]\nTraffic Accidents in Helsinki [b]\nFinnish bird nesting Atlas [c]\n"
-        self.select_operation = "OPERATION MENU:\n\nSelect Operation to perform on this dataset: \n\nColumn statistics [s]\nPlot [p]\n"
+        self.select_data_UI = (f"{UI.divider}\nMAIN MENU:\n\nSelect the dataset to present "
+                               f"by typing a letter from the list below.\n\nVisits at the City of Vantaa "
+                               f"swimming pools [a]\nTraffic Accidents in Helsinki [b]\nFinnish bird nesting "
+                               f"Atlas [c]\n\n(type 'q' for quit)\n")
+        self.select_operation = (f"{UI.divider}\nOPERATION MENU:\n\nSelect Operation to perform on this dataset: "
+                                 f"\n\nColumn statistics [s]\nPlot [p]\n\n(type 'b' for back or 'q' for quit)\n")
         self.chosen_data_set = None
+    
+    divider = '='*40
     
     def set_chosen_data_set(self, letter):
         sets = {'a': self._pool,
@@ -30,7 +36,8 @@ class UI:
     def generate_plot_UI(self, dataset_names):
         cleaned_names = [
             f"{sub('_', ' ', name).capitalize()} [{index}]" for index, name in enumerate(dataset_names)]
-        return """PLOT MENU:\n\nChoose what to plot by typing the number next to the name\n\n{}\n""".format('\n'.join(cleaned_names))
+        return ("{}\nPLOT MENU:\n\nChoose what to plot by typing the number next to the name\n\n{}"
+                "\n(type 'b' for back or 'q' for quit)\n").format(UI.divider, '\n'.join(cleaned_names))
 
     def generate_chosen_plot(self, dataset, plots, pick):
         """This cool function was taken from:
@@ -96,26 +103,43 @@ class UI:
 if __name__ == '__main__':
     
     def plotting_ui(interface):
-        menu = 'main'
+        menu = 'datasets'
         while 1:
-            if menu == 'main':
+            if menu == 'datasets':
                 dataset = click.prompt(interface.select_data_UI,
                                         type=click.Choice(['a', 'b', 'c', 'q']))
-                interface.set_chosen_data_set(dataset)
+                if dataset == 'q':
+                    menu = 'quit'
+                else:
+                    interface.set_chosen_data_set(dataset)
+                    menu = 'operations'
+            elif menu == 'operations':
                 op = click.prompt(interface.select_operation,
                                   type=click.Choice(['s', 'p', 'b', 'q']))
-            if op == 's':
-                print(interface.chosen_data_set.get_description(), '\n')
-            elif op == 'p':
+                if op == 'q':
+                    menu = 'quit'
+                elif op == 'b':
+                    menu = 'datasets' 
+                elif op == 's':
+                    print(interface.chosen_data_set.get_description(), '\n')
+                elif op == 'p':
+                    menu = 'plots'
+            elif menu == 'plots':
                 names = interface.get_plot_names(interface.chosen_data_set)
                 choices = [str(n) for n in range(len(names))]
                 choices.extend(['b', 'q'])
-                print(names)
                 plot_choice = click.prompt(interface.generate_plot_UI(names),
                                            type=click.Choice(choices))
-                interface.generate_chosen_plot(
-                    interface.chosen_data_set, names, int(plot_choice))
-                plt.show()
+                if plot_choice == 'q':
+                    menu = 'quit'
+                elif plot_choice == 'b':
+                    menu = 'operations'
+                else:
+                    interface.generate_chosen_plot(
+                        interface.chosen_data_set, names, int(plot_choice))
+                    plt.show()
+            elif menu == 'quit':
+                return
 
     a = UI()
     plotting_ui(a)
